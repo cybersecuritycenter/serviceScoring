@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+#USAGE:
+#-------------------------------------
+#./ftpscore.sh <remote-user> <remote-password>
+#-------------------------------------
+
+set user [lrange $argv 0 0]
+set password [lrange $argv 1 1]
+
+spawn ftp 192.168.30.4
+expect "Name (192.168.30.4:root):"
+send -- "$user\r"
+expect "Password:"
+send -- "$password\r"
+expect "ftp>"
+send -- "lcd /home/ftp\r"
+expect "ftp>"
+send -- "cd /home/ftp\r"
+expect "ftp>"
+send -- "delete scorecheck.txt\r"
+expect "ftp>"
+send -- "put /home/ftp/scorecheck.txt\r"
+expect "ftp>"
+send -- "get /home/ftp/scorecheck.txt /home/ftp/scorecheck.txt\r"
+expect "ftp>"
+send -- "bye\r"
+#interact
+
